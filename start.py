@@ -25,7 +25,7 @@ with open("users.json", "r") as file:
         list_line_htpasswd.append(encrypt_password(user["username"], user["password"]))
 
 with open(path_file_htpasswd, "w") as password_file:
-    password_file.writelines(list_line_htpasswd)
+    password_file.write("\n".join(list_line_htpasswd))
 
 # start container
 path_dir_data = os.path.abspath(os.path.join(local_path, "data"))
