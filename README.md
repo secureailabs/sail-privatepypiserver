@@ -1,11 +1,11 @@
 # sail-privatepypiserver
 
-currently this code is running at ```172.20.0.5``` in the azure cloud within our vpn\
+currently this code is running at ```172.20.0.5``` in the azure cloud within our vpn
 
 ## deployment instuctions
-install arin-core-azure but some means \
+install arin-core-azure but some means
 
-```python deploy.py```\
+```python deploy.py```
 
 The script will find the right machine on azure and install and start a pipy server there
 
