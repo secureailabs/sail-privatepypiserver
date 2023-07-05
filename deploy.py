@@ -11,7 +11,7 @@ from arin_core_azure.resource_helper import ResourceHelper
 from arin_core_azure.ssh_helper import SshHelper
 
 subscription_name = "Development"
-path_file_key = "c:/key/jaap-pipyserver-key.pem"
+path_file_key = "c:/key/jaap-pipyserver2-key.pem"
 git_repo_url = "github.com/secureailabs/sail-privatepypiserver"
 path_file_git_token = os.environ.get("PATH_FILE_GIT_TOKEN")
 
@@ -41,7 +41,7 @@ if len(list_vm) > 1:
 vm_target = list_vm[0]
 
 
-hostname = compute_helper.get_vm_public_ip_address(vm_target)
+hostname = compute_helper.get_vm_private_ip_address(vm_target)
 username = compute_helper.get_vm_admin_username(vm_target)
 
 
@@ -52,10 +52,11 @@ ssh_helper = SshHelper(hostname, username, path_file_key)
 # print("installing docker.io")
 # ssh_helper.install_remote(["docker.io git python3-pip"], do_update=False)
 print("installing python repo")
-ssh_helper.install_remote(["git python3-pip"], do_update=False)
+ssh_helper.install_remote(["git", "python3-pip", "docker.io"], do_update=True)
 print("remove old repo")
 ssh_helper.run_remote("rm -Rf ~/sail-privatepypiserver")
 print("cloning repo")
 ssh_helper.clone_remote_with_token(git_repo_url, git_token)
 ssh_helper.run_remote("pip3 install -r requirements.txt", path="~/sail-privatepypiserver/")
+ssh_helper.run_remote(f"sudo usermod -a -G docker {username}")
 ssh_helper.run_remote("python3 start.py", path="~/sail-privatepypiserver/")
