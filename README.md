@@ -19,7 +19,7 @@ Set the following environment variables
 
 in arin-azure-core there is an example of a release script (release.py) that will pick these up and deploy wheels to the server
 
-## conspumtion instructions
+## consumption instructions
 
 1. find where your global pip config file is\
 ```pip config -v list```\
