@@ -1,3 +1,8 @@
+#
+# This script is used to deploy the pipy server to a single VM
+# it depends on the following packages:
+# sail-core-azure==1.0.0
+
 # find a single vm allocates to host the service
 import os
 
@@ -46,6 +51,11 @@ ssh_helper = SshHelper(hostname, username, path_file_key)
 
 # print("installing docker.io")
 # ssh_helper.install_remote(["docker.io git python3-pip"], do_update=False)
+print("installing python repo")
+ssh_helper.install_remote(["git python3-pip"], do_update=False)
+print("remove old repo")
+ssh_helper.run_remote("rm -Rf ~/sail-privatepypiserver")
 print("cloning repo")
-
 ssh_helper.clone_remote_with_token(git_repo_url, git_token)
+ssh_helper.run_remote("pip3 install -r requirements.txt", path="~/sail-privatepypiserver/")
+ssh_helper.run_remote("python3 start.py", path="~/sail-privatepypiserver/")
