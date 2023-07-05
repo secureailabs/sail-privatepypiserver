@@ -1,1 +1,4 @@
 bcrypt==4.0.1
+
+# for deployment
+sail-core-azure==1.0.0
